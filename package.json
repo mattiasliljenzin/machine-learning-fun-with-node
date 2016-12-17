@@ -7,6 +7,7 @@
     "compile": "babel -d lib/ src/",
     "start": "babel-node index.js",
     "nodemon": "nodemon --exec npm start",
+    "nodemontest": "nodemon --exec npm test",
     "test": "node_modules/.bin/mocha --compilers js:babel-core/register"
   },
   "author": "",

@@ -1,25 +1,42 @@
-import chai, { expect, should} from 'chai';
+import chai, {
+    expect,
+    should,
+    assert
+} from 'chai';
 should();
-import chaiAsPromised from "chai-as-promised";
-import 'babel-polyfill';
-chai.use(chaiAsPromised);
 import fs from 'fs';
 import promisify from 'es6-promisify';
 import math from 'mathjs';
-
+var global_data = [];
 describe('data verify step', function () {
 
     it('should read data into matrices', function () {
-        
-        let readToMatrices = (data) => {
-            let lines = data.split('\n');
-            let matrix = math.matrix(lines);
-            console.log(matrix)
-            
-            lines.forEach((line, index) => {
-                //console.log(index);
-            });
 
+        let readToMatrices = (data) => {
+            let lines = data.split('\n')
+                            .map(x => x.split(','))
+                            .filter(x => x.length == 2);
+            let matrix = math.matrix(lines);
+
+            let size = matrix.size();
+            let rows = size[0];
+            let columns = size[1];
+            let m = columns;
+            let theta = math.zeros(2,1);
+            let x = matrix.subset(math.index(math.range(0,m),[0]));
+            let y = matrix.subset(math.index(math.range(0,m),[1]));
+
+            console.log(matrix);
+
+            console.log(x);
+            console.log('test')
+            console.log(y);
+
+            assert.equal(97, rows, '97 rows in a 97x2 matrix');
+            assert.equal(2, columns, '2 columns in a 97x2 matrix');
+
+            let h = math.multiply(x, theta);
+            console.log(h);
         };
 
         let readFile = promisify(fs.readFile);
