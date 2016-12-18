@@ -113,6 +113,7 @@ describe('algorithm verifying step', function () {
         let data = getDataMulti();
         let normalizer = new Normalizer();
         let result = normalizer.calculate(data.X);
+        console.log(result);
         assert.fail('not done yet')
     });
 });
