@@ -64,9 +64,9 @@ describe('algorithm verifying step', function () {
     it('should calculate normalized data', async () => {
         let controller = new Controller();
         let data = await controller.load('./test/data-multi.txt');
-        //let normalizer = new Normalizer();
-        //let result = normalizer.calculate(data.X);
+        let normalizer = new Normalizer();
+        let result = normalizer.calculate(data.X);
 
-        
+        console.log(result);
     });
 });
