@@ -9,7 +9,7 @@ export default class FileDataSource {
         let lines = data
             .split('\n')
             .map(x => x.split(','));
-
+            
         return math.matrix(lines);
     }
 }

@@ -9,11 +9,10 @@ export default class MatrixTransformer {
         let columns = size[1];
         let m = rows;
 
-        let x = data.subset(math.index(math.range(0, m), 0));
-        let y = data.subset(math.index(math.range(0, m), 1));
-
+        let x = data.subset(math.index(math.range(0, m), math.range(0, columns - 1)));
+        let y = data.subset(math.index(math.range(0, m), columns - 1));
         let X = math.concat(math.ones(m, 1), x);
-        let theta = math.zeros(2, 1);
+        let theta = math.zeros(columns, 1);
 
         return {
             theta: theta,
