@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "compile": "babel -d lib/ src/",
+    "compiletest": "babel -d lib/ test/",
     "start": "babel-node index.js",
     "nodemon": "nodemon --exec npm start",
     "nodemontest": "nodemon --exec npm test",
@@ -31,6 +32,8 @@
   "devDependencies": {
     "babel": "^4.6.0",
     "babel-cli": "^6.18.0",
-    "babel-preset-es2015": "^6.18.0"
+    "babel-preset-es2015": "^6.18.0",
+    "babel-preset-es2017": "^6.16.0",
+    "babel-preset-stage-3": "^6.17.0"
   }
 }
