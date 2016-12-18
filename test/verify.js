@@ -1,17 +1,12 @@
-import chai, {
-    expect,
-    should,
-    assert
-} from 'chai';
-should();
+import chai, { expect, should, assert } from 'chai';
 import math from 'mathjs';
-import DataSource from './datasource';
+import MatrixSource from './matrixsource';
 
-describe('data verify step', function () {
+describe('algorithm verifying step', function () {
 
-    it('should read data into matrices', async function () {
+    it('should read data into matrices and calculate the value of cost function J', async function () {
 
-        let ds = new DataSource();
+        let ds = new MatrixSource();
         let data = await ds.get();
         let size = data.size();
 
