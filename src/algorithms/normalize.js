@@ -4,26 +4,24 @@ export default class Normalize {
 
     calculate(X) {
 
-        let mu = [];
-        let sigma = [];
-        let xnorm = [];
+        // Do column by column due to some lack of vectorization support (i.e mean, std)
+
         let size = X.size();
         let rows = size[0];
         let columns = size[1];
-        console.log(columns);
+
+        let mu = [];
+        let sigma = [];
+        let xnorm = [];
+        let normalizedX = [];
+
         for (var i = 0; i < columns; i++) {
             let subset = X.subset(math.index(math.range(0, rows), i));
             mu[i] = math.mean(subset);
             sigma[i] = math.std(subset);
             xnorm[i] = math.subtract(subset, mu[i]);
+            normalizedX[i] = math.dotDivide(xnorm[i], sigma[i]);
         }
-
-        mu = math.matrix(mu);
-        sigma = math.matrix(sigma);
-        console.log(mu);
-        console.log(xnorm);
-        let diff = math.subtract(xnorm, mu);
-        let normalizedX = math.dotDivide(diff, sigma);
 
         return {
             data: normalizedX,

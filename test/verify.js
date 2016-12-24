@@ -113,7 +113,21 @@ describe('algorithm verifying step', function () {
         let data = getDataMulti();
         let normalizer = new Normalizer();
         let result = normalizer.calculate(data.X);
-        console.log(result);
-        assert.fail('not done yet')
+
+        assert.equal(1, result.mu[0]);
+        assert.equal(2000.6808510638298, result.mu[1]);
+        assert.equal(3.1702127659574466, result.mu[2]);
+
+        assert.equal(0, result.sigma[0]);
+        assert.equal(794.7023535338897, result.sigma[1]);
+        assert.equal(0.7609818867800999, result.sigma[2]);
+        
+        let first = result.data[0]._data;
+        let second = result.data[1]._data;
+        let third = result.data[2]._data;
+        
+        assert.equal(true, isNaN(first[0]));
+        assert.equal(0.13000986907454054, second[0]);
+        assert.equal(-0.2236751871685913, third[0]);
     });
 });
