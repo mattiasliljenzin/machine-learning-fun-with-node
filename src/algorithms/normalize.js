@@ -25,7 +25,7 @@ export default class Normalize {
             // bias feature messing up result if doing vectorization
             // if sigma or mean is 0 then bias value returns as NaN
             // return input value instead since there is no variation 
-            return x1 === 0 || s1 === 0 ? el : x1 / s1;
+            return s1 === 0 ? el : x1 / s1;
         });
 
         return {
