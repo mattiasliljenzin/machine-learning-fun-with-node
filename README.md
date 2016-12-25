@@ -7,5 +7,5 @@ Playing around with machine learning and nodejs
 
 Supports single and multi-vector matrices.
 
-I am using the same data as Andrew Ng's course in Machine Learning on https://www.coursera.org/learn/machine-learning.
-This is an example of how you could implement excercises from ex1 in Javascript
+I am using the same data as in Andrew Ng's course on Machine Learning (https://www.coursera.org/learn/machine-learning).
+This repository includes some implementations in Javascript from ex1-assignments.
