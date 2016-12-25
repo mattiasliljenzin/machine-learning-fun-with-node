@@ -1,30 +1,35 @@
 import math from 'mathjs';
+import {
+    Vector
+} from 'sylvester';
 
 export default class Normalize {
 
     calculate(X) {
 
-        // Do column by column due to some lack of vectorization support (i.e mean, std)
-
-        let size = X.size();
-        let rows = size[0];
-        let columns = size[1];
-
-        let mu = [];
         let sigma = [];
-        let xnorm = [];
-        let normalizedX = [];
+        let mu = X.mean();
 
-        for (var i = 0; i < columns; i++) {
-            let subset = X.subset(math.index(math.range(0, rows), i));
-            mu[i] = math.mean(subset);
-            sigma[i] = math.std(subset);
-            xnorm[i] = math.subtract(subset, mu[i]);
-            normalizedX[i] = math.dotDivide(xnorm[i], sigma[i]);
+        for (let i = 1; i <= X.cols(); i++) {
+            let data = [];
+            X.col(i).map(m => data.push(m));
+            sigma[i - 1] = math.std(data);
         }
 
+        sigma = Vector.create(sigma);
+
+        let normalized = X.map((el, row, col) => {
+            let x1 = (el - mu.e(col));
+            let s1 = sigma.e(col);
+
+            // bias feature messing up result if doing vectorization
+            // if sigma or mean is 0 then bias value returns as NaN
+            // return input value instead since there is no variation 
+            return x1 === 0 || s1 === 0 ? el : x1 / s1;
+        });
+
         return {
-            data: normalizedX,
+            data: normalized,
             mu: mu,
             sigma: sigma
         };

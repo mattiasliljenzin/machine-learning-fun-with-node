@@ -28,7 +28,8 @@
     "mocha-clean": "^1.0.0",
     "querystring": "^0.2.0",
     "sha1": "^1.1.1",
-    "should": "^11.1.2"
+    "should": "^11.1.2",
+    "sylvester": "0.0.21"
   },
   "devDependencies": {
     "babel": "^4.6.0",

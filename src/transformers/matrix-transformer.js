@@ -1,4 +1,8 @@
 import math from 'mathjs';
+import {
+    Vector,
+    Matrix
+} from 'sylvester';
 
 export default class MatrixTransformer {
 
@@ -22,8 +26,28 @@ export default class MatrixTransformer {
             m: m,
             rows: rows,
             columns: columns,
-            size:size
+            size: size
         }
+    }
 
+    transform2(data) {
+
+        let rows = data.dimensions().rows;
+        let columns = data.dimensions().cols;
+        let x = data.slice(1, rows, 1, columns - 1);
+        let y = data.slice(1, rows, columns, columns);
+        let X = Vector.One(rows).transpose().augment(x);
+        let theta = Vector.Zero(columns);
+
+        return {
+            rows: rows,
+            columns: columns,
+            y: y,
+            x: x,
+            X: X,
+            m: rows,
+            size: [rows, columns],
+            theta: theta
+        };
     }
 }
