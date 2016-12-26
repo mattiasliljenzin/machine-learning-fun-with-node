@@ -1,6 +1,8 @@
 # Custom
 config.js
 lib/*/**
+.vscode
+
 
 # Logs
 logs
