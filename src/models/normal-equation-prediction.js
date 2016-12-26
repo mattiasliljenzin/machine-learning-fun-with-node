@@ -1,12 +1,10 @@
 import CostFunction from '../algorithms/cost-function';
-import GradientDescent from '../algorithms/gradient-descent';
+import NormalEquation from '../algorithms/normal-equation';
 import Normalizer from '../algorithms/normalize';
 
-export default class GradientDescentPrediction {
+export default class NormalEquationPrediction {
 
     constructor(options) {
-        this.alpha = options.alpha || 0.01;
-        this.iterations = options.iterations || 400;
         this.normalizeData = options.normalizeData === false ? false : true,
         this.theta = [];
         this.features = ['listPrice', 'rent', 'livingArea', 'rooms', 'constructionYear', 'soldPrice', 'floor'];
@@ -18,16 +16,11 @@ export default class GradientDescentPrediction {
             X = new Normalizer().calculate(X).data;
         }
 
-        let gradientDescent = new GradientDescent();
-        let calculations = gradientDescent.calculate(X, y, theta, this.alpha, this.iterations);
-
-        for (let calculation of calculations) {
-            this.theta = calculation.theta;
-            this.J = calculation.J;
-        }
+        this.theta = new NormalEquation().calculate(X, y);
     }
 
     predict(inputData) {
+        console.log(this.theta);
         return inputData.transpose().multiply(this.theta);
     }
 }

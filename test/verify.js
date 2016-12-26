@@ -3,6 +3,10 @@ import chai, {
     should,
     assert
 } from 'chai';
+import {
+    Vector,
+    Matrix
+} from 'sylvester';
 import math from 'mathjs';
 import Controller from '../src/controller';
 import CostFunction from '../src/algorithms/cost-function';
@@ -10,13 +14,11 @@ import GradientDescent from '../src/algorithms/gradient-descent';
 import Normalizer from '../src/algorithms/normalize';
 import GradientDescentPrediction from '../src/models/gradient-descent-prediction';
 import NormalEquation from '../src/algorithms/normal-equation';
-import {
-    Vector,
-    Matrix
-} from 'sylvester';
+import NormalEquationPrediction from '../src/models/normal-equation-prediction';
 
 
-describe('algorithm verifying step', function () {
+
+describe('algorithm test steps', function () {
 
     const getData = () => Object.assign({}, testData);
     const getDataMulti = () => Object.assign({}, testDataMulti);
@@ -141,6 +143,7 @@ describe('algorithm verifying step', function () {
     });
 
     it('should calculate normalized data with multiple variables', async() => {
+        
         let data = getDataMulti();
         let normalizer = new Normalizer();
         let result = normalizer.calculate(data.X);
@@ -170,8 +173,10 @@ describe('algorithm verifying step', function () {
         let input2 = Matrix.create([1, 7.0]);
 
         let model = new GradientDescentPrediction(options);
-        let prediction1 = model.predict(input1, data.X, data.y, data.theta);
-        let prediction2 = model.predict(input2, data.X, data.y, data.theta);
+        model.train(data.X, data.y, data.theta);
+
+        let prediction1 = model.predict(input1);
+        let prediction2 = model.predict(input2);
 
         assert.equal(4519.767867701776, prediction1.e(1,1) * 10000);
         assert.equal(45342.45012944714, prediction2.e(1,1) * 10000);
@@ -185,11 +190,29 @@ describe('algorithm verifying step', function () {
             normalizeData: true
         };
 
-        let input = Matrix.create([1, 1650, 3]);
-
         let model = new GradientDescentPrediction(options);
-        let prediction = model.predict(input, data.X, data.y, data.theta);
+        model.train(data.X, data.y, data.theta);
+
+        let input = Matrix.create([1, 1650, 3]);
+        let prediction = model.predict(input);
 
         assert.equal(165489064.11899266, prediction.e(1,1)); // this has not converged well
     });
+
+    it('should predict multi feature data with normal equation', async() => {
+        let data = getDataMulti();
+        let options = {
+            normalizeData: true
+        };
+
+        let model = new NormalEquationPrediction(options);
+        model.train(data.X, data.y, data.theta);
+        
+        let input = Matrix.create([1, 1650, 3]);
+        let prediction = model.predict(input);
+
+        assert.equal(293081.464335, prediction.e(1,1)); // this has not converged well
+    });
+
+    
 });
