@@ -1,24 +1,16 @@
-import chai, {
-    expect,
-    should,
-    assert
-} from 'chai';
-import {
-    Vector,
-    Matrix
-} from 'sylvester';
-import math from 'mathjs';
+import chai, { expect, should, assert } from 'chai';
+import { Vector, Matrix } from 'sylvester';
 import Controller from '../src/controller';
 import CostFunction from '../src/algorithms/cost-function';
 import GradientDescent from '../src/algorithms/gradient-descent';
-import Normalizer from '../src/algorithms/normalize';
 import GradientDescentPrediction from '../src/models/gradient-descent-prediction';
+import Normalizer from '../src/algorithms/normalize';
 import NormalEquation from '../src/algorithms/normal-equation';
 import NormalEquationPrediction from '../src/models/normal-equation-prediction';
 
 
 
-describe('algorithm test steps', function () {
+describe('algorithm validation tests', function () {
 
     const getData = () => Object.assign({}, testData);
     const getDataMulti = () => Object.assign({}, testDataMulti);
@@ -171,8 +163,7 @@ describe('algorithm test steps', function () {
         let input1 = Matrix.create([1, 3.5])
         let input2 = Matrix.create([1, 7.0]);
 
-        let model = new GradientDescentPrediction(options);
-        model.train(data.X, data.y, data.theta);
+        let model = new GradientDescentPrediction(options).train(data.X, data.y, data.theta);
 
         let prediction1 = model.predict(input1);
         let prediction2 = model.predict(input2);
@@ -189,9 +180,7 @@ describe('algorithm test steps', function () {
             normalizeData: true
         };
 
-        let model = new GradientDescentPrediction(options);
-        model.train(data.X, data.y, data.theta);
-
+        let model = new GradientDescentPrediction(options).train(data.X, data.y, data.theta);
         let input = Matrix.create([1, 1650, 3]);
         let prediction = model.predict(input);
 
@@ -200,10 +189,7 @@ describe('algorithm test steps', function () {
 
     it('should predict single feature data with normal equation', async() => {
         let data = getData();
-
-        let model = new NormalEquationPrediction();
-        model.train(data.X, data.y, data.theta);
-        
+        let model = new NormalEquationPrediction().train(data.X, data.y, data.theta);
         let input = Matrix.create([1, 1650]);
         let prediction = model.predict(input);
 
@@ -212,9 +198,7 @@ describe('algorithm test steps', function () {
 
     it('should predict multi feature data with normal equation', async() => {
         let data = getDataMulti();
-        let model = new NormalEquationPrediction();
-        model.train(data.X, data.y, data.theta);
-        
+        let model = new NormalEquationPrediction().train(data.X, data.y, data.theta);
         let input = Matrix.create([1, 1650, 3]);
         let prediction = model.predict(input);
 

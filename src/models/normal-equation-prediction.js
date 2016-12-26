@@ -11,6 +11,7 @@ export default class NormalEquationPrediction {
 
     train(X, y, theta) {
         this.theta = new NormalEquation().calculate(X, y);
+        return this;
     }
 
     predict(inputData) {

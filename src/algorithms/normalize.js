@@ -9,8 +9,9 @@ export default class Normalize {
 
         let sigma = [];
         let mu = X.mean();
+        let columns = X.cols();
 
-        for (let i = 1; i <= X.cols(); i++) {
+        for (let i = 1; i <= columns; i++) {
             let data = [];
             X.col(i).map(m => data.push(m));
             sigma[i - 1] = math.std(data);
@@ -22,9 +23,7 @@ export default class Normalize {
             let x1 = (el - mu.e(col));
             let s1 = sigma.e(col);
 
-            // bias feature messing up result if doing vectorization
-            // if sigma or mean is 0 then bias value returns as NaN
-            // return input value instead since there is no variation 
+            // dont divide with zero when sigma is 0 (e.g bias vector)
             return s1 === 0 ? el : x1 / s1;
         });
 

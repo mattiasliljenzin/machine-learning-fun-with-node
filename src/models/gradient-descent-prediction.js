@@ -7,9 +7,8 @@ export default class GradientDescentPrediction {
     constructor(options) {
         this.alpha = options.alpha || 0.01;
         this.iterations = options.iterations || 400;
-        this.normalizeData = options.normalizeData === false ? false : true,
+        this.normalizeData = options.normalizeData === false ? false : true;
         this.theta = [];
-        this.features = ['listPrice', 'rent', 'livingArea', 'rooms', 'constructionYear', 'soldPrice', 'floor'];
     }
 
     train(X, y, theta) {
@@ -19,12 +18,14 @@ export default class GradientDescentPrediction {
         }
 
         let gradientDescent = new GradientDescent();
-        let calculations = gradientDescent.calculate(X, y, theta, this.alpha, this.iterations);
+        let results = gradientDescent.calculate(X, y, theta, this.alpha, this.iterations);
 
-        for (let calculation of calculations) {
-            this.theta = calculation.theta;
-            this.J = calculation.J;
+        for (let result of results) {
+            this.theta = result.theta;
+            this.J = result.J;
         }
+
+        return this;
     }
 
     predict(inputData) {
