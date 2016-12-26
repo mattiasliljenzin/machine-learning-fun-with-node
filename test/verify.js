@@ -134,7 +134,6 @@ describe('algorithm test steps', function () {
 
         for (let iteration of J) {
             result = iteration;
-            //console.log('J: ' + result.J);
         }
         assert.equal(334302.06399327697, result.theta.e(1, 1), 'theta 1 ok');
         assert.equal(100087.11600584643, result.theta.e(2, 1), 'theta 2 ok');
@@ -199,19 +198,27 @@ describe('algorithm test steps', function () {
         assert.equal(165489064.11899266, prediction.e(1,1)); // this has not converged well
     });
 
+    it('should predict single feature data with normal equation', async() => {
+        let data = getData();
+
+        let model = new NormalEquationPrediction();
+        model.train(data.X, data.y, data.theta);
+        
+        let input = Matrix.create([1, 1650]);
+        let prediction = model.predict(input);
+
+        assert.equal(1964.6097320345152, prediction.e(1,1)); // this has not converged well
+    });
+
     it('should predict multi feature data with normal equation', async() => {
         let data = getDataMulti();
-        let options = {
-            normalizeData: true
-        };
-
-        let model = new NormalEquationPrediction(options);
+        let model = new NormalEquationPrediction();
         model.train(data.X, data.y, data.theta);
         
         let input = Matrix.create([1, 1650, 3]);
         let prediction = model.predict(input);
 
-        assert.equal(293081.464335, prediction.e(1,1)); // this has not converged well
+        assert.equal(293081.4643348951, prediction.e(1,1)); // this has not converged well
     });
 
     
